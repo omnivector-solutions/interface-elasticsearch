@@ -1,0 +1,4 @@
+name: elasticsearch
+summary: Basic elasticsearch interface
+version: 1
+repo: https://github.com/jamesbeedy/interface-elasticsearch
