@@ -13,11 +13,3 @@ class ElasticsearchPeer(Endpoint):
     def peer_departed(self):
         set_flag('endpoint.{endpoint_name}.cluster.departed')
         clear_flag('endpoint.{endpoint_name}.departed')
-
-    def peer_info(self):
-        """
-        Helper to give all members access to the other peer's
-        unit info.
-
-        """
-        return self.all_units
