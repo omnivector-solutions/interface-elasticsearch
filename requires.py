@@ -15,10 +15,6 @@ class ElasticsearchRequires(Endpoint):
         clear_flag('endpoint.{endpoint_name}.changed.port')
         clear_flag('endpoint.{endpoint_name}.changed.cluster_name')
 
-    @when_not('endpoint.{endpoint_name}.joined')
-    def broken(self):
-        clear_flag('endpoint.{endpoint_name}.available')
-
 
     def relation_data(self):
         """
