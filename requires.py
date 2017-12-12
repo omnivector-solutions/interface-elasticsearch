@@ -5,16 +5,22 @@ from charms.reactive import Endpoint
 
 class ElasticsearchRequires(Endpoint):
 
+    @when('endpoint.{endpoint_name}.joined')
+    def joined(self):
+        if any(unit.received['port'] for unit in self.all_units):
+            set_flag(self.expand_name('endpoint.{endpoint_name}.available'))
+
     @when_any('endpoint.{endpoint_name}.changed.host',
               'endpoint.{endpoint_name}.changed.port',
               'endpoint.{endpoint_name}.changed.cluster_name')
     def changed(self):
         if any(unit.received['port'] for unit in self.all_units):
-            set_flag('endpoint.{endpoint_name}.available')
-        clear_flag('endpoint.{endpoint_name}.changed.host')
-        clear_flag('endpoint.{endpoint_name}.changed.port')
-        clear_flag('endpoint.{endpoint_name}.changed.cluster_name')
+            set_flag(self.expand_name('endpoint.{endpoint_name}.available'))
 
+    @when_not('endpoint.{endpoint_name}.joined')
+    def broken(self):
+        clear_flag(self.expand_name('endpoint.{endpoint_name}.available'))
+        
 
     def relation_data(self):
         """

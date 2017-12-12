@@ -6,8 +6,8 @@ class ElasticsearchPeer(Endpoint):
 
     @when('endpoint.{endpoint_name}.joined')
     def peer_joined(self):
-        set_flag('endpoint.{endpoint_name}.cluster.joined')
+        set_flag(self.expand_name('endpoint.{endpoint_name}.cluster.joined'))
 
     @when('endpoint.{endpoint_name}.departed')
     def peer_departed(self):
-        set_flag('endpoint.{endpoint_name}.cluster.departed')
+        set_flag(self.expand_name('endpoint.{endpoint_name}.cluster.departed'))
