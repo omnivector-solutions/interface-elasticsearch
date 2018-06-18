@@ -22,7 +22,7 @@ class ElasticsearchRequires(Endpoint):
         clear_flag(self.expand_name('endpoint.{endpoint_name}.available'))
         
 
-    def relation_data(self):
+    def list_unit_data(self):
         """
         Get the list of the relation info for each unit.
 
