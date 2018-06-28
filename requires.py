@@ -10,17 +10,10 @@ class ElasticsearchRequires(Endpoint):
         if any(unit.received['port'] for unit in self.all_joined_units):
             set_flag(self.expand_name('available'))
 
-    @when_any('endpoint.{endpoint_name}.changed.host',
-              'endpoint.{endpoint_name}.changed.port',
-              'endpoint.{endpoint_name}.changed.cluster_name')
+    @when('endpoint.{endpoint_name}.changed')
     def changed(self):
         if any(unit.received['port'] for unit in self.all_joined_units):
             set_flag(self.expand_name('available'))
-
-    @when_not('endpoint.{endpoint_name}.joined')
-    def broken(self):
-        clear_flag(self.expand_name('available'))
-        
 
     def list_unit_data(self):
         """
@@ -37,8 +30,6 @@ class ElasticsearchRequires(Endpoint):
                     'host': '10.1.1.1',
                     'port': '80',
                     'cluster_name': "elasticsearch"
-                    'relation_id': 'reverseproxy:1',
-                    'unit_name': 'myblog/0',
                 },
             ]
         """

@@ -1,4 +1,3 @@
-from charms.reactive import when, set_flag, clear_flag
 from charms.reactive import Endpoint
 
 
