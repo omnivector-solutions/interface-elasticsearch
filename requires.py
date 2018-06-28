@@ -7,19 +7,19 @@ class ElasticsearchRequires(Endpoint):
 
     @when('endpoint.{endpoint_name}.joined')
     def joined(self):
-        if any(unit.received['port'] for unit in self.all_units):
-            set_flag(self.expand_name('endpoint.{endpoint_name}.available'))
+        if any(unit.received['port'] for unit in self.all_joined_units):
+            set_flag(self.expand_name('available'))
 
     @when_any('endpoint.{endpoint_name}.changed.host',
               'endpoint.{endpoint_name}.changed.port',
               'endpoint.{endpoint_name}.changed.cluster_name')
     def changed(self):
-        if any(unit.received['port'] for unit in self.all_units):
-            set_flag(self.expand_name('endpoint.{endpoint_name}.available'))
+        if any(unit.received['port'] for unit in self.all_joined_units):
+            set_flag(self.expand_name('available'))
 
     @when_not('endpoint.{endpoint_name}.joined')
     def broken(self):
-        clear_flag(self.expand_name('endpoint.{endpoint_name}.available'))
+        clear_flag(self.expand_name('available'))
         
 
     def list_unit_data(self):
@@ -44,7 +44,7 @@ class ElasticsearchRequires(Endpoint):
         """
         units_data = []
         for relation in self.relations:
-            for unit in relation.units:
+            for unit in relation.joined_units:
                 host = unit.received['host']
                 port = unit.received['port']
                 cluster_name = unit.received['cluster_name']
@@ -54,7 +54,5 @@ class ElasticsearchRequires(Endpoint):
                     'host': host,
                     'port': port,
                     'cluster_name': cluster_name,
-                    'relation_id': relation.relation_id,
-                    'unit_name': unit.unit_name,
                 })
         return units_data
