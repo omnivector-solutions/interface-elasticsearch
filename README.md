@@ -12,8 +12,9 @@ the [provides](provides.py) side of the interface.
 
 ```python
 @reactive.when('endpoint.elasticsearch.available')
-def render_elasticsearch_lb():
-    """Get Elasticsearch cluster nodes.
+def gather_elasticsearch_cluster_host_port():
+    """Get Elasticsearch cluster nodes "<host>:<port>" from relation data and save
+    to local charm KV store.
     """
     hookenv.status_set('maintenance',
                        'Configuring application for elasticsearch')
