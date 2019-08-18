@@ -20,10 +20,7 @@ class ElasticsearchRequires(Endpoint):
         Get the list of the relation info for each unit.
 
         Returns a list of dicts, where each dict contains the elasticsearch
-        cluster name, the host (address)
-        and the port (as a string), as well as
-        the relation ID and remote unit name that provided the site.
-
+        cluster name, the host (address) and the port (as a string).
         For example::
             [
                 {
